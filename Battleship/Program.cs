@@ -10,13 +10,13 @@ var p1 = new Player(width, height);
 var p2 = new Player(width, height);
 
 
-if (p1.AddShip(1, 2, new Ship(1), Direction.Vertical))
-    Console.WriteLine("Ship added");
+if (p1.AddShip(1, 1, new Ship(2), Direction.Horizontal))
+    Console.WriteLine("Ship added 1,1 horizontal length 2");
 else
     Console.WriteLine("Invalid ship position");
 
-if (p1.AddShip(8, 4, new Ship(1), Direction.Vertical))
-    Console.WriteLine("Ship added");
+if (p1.AddShip(1,2, new Ship(3), Direction.Vertical))
+    Console.WriteLine("Ship added 1,2 veritcal length 3");
 else
     Console.WriteLine("Invalid ship position");
 
@@ -44,7 +44,7 @@ while(userInput != "Q")
         Console.WriteLine("Invalid input");
     }
 
-    if (p1.GameComplete())
+    if (p1.PlayerLostGame())
     {
         Console.WriteLine("Game Complete. Press Q to exit.");
     }

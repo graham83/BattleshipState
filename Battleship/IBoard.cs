@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    internal interface IBoard
+    public interface IBoard
     {
-        public int[,] Grid { get;set ;}
        
         public int ShipCount { get; set; }
         
@@ -20,7 +19,7 @@ namespace Battleship
 
         public bool TakeAttack(int posX, int posY); 
 
-        public bool GameComplete();
+        public bool PlayerLostGame();
 
 
     }

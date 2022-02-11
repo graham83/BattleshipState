@@ -6,38 +6,44 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    internal class Player : IBoard
+    public class Player : IBoard
     {
-        public int[,] Grid { get; set; }
 
-        public int Width
+        public int BoardWidth
         {
             get
             {
-                return Grid.GetLength(0);
+                return _grid.GetLength(0);
             }
         }
 
-        public int Height
+        public int BoardHeight
         {
             get
             {
-                return Grid.GetLength(1);
+                return _grid.GetLength(1);
             }
         }
 
         public int ShipCount { get; set; } = 0;
         public int AttackCount { get; set; } = 0;
 
-        public Player(int width, int height)
+        private int[,] _grid { get; set; }
+
+        public Player(int boardWidth, int boardHeight)
         {
-            Grid = CreateBoard(width, height);
+           _grid = CreateBoard(boardWidth, boardHeight);
         }
    
         public int[,] CreateBoard(int width, int height)
         {
-            return new int[width, height];
+            if (width < 1 || height < 1) return new int[10, 10];
+
+            _grid = new int[width, height];
+
+            return _grid;
         }
+
 
         public bool AddShip(int posX, int posY, Ship ship, Direction direction)
         {
@@ -57,37 +63,40 @@ namespace Battleship
 
             if (PositionValid(x, y))
             {
-                var hit = Grid[x, y] >= (int)PointState.Ship;
+                var hit = _grid[x, y] >= (int)PointState.Ship;
 
                 if (hit)
                 {
-                    Grid[x, y] = (int)PointState.Hit;
+                    _grid[x, y] = (int)PointState.Hit;
                     return true;
                 }
                 else
                 {
-                    Grid[x, y] = (int)PointState.Miss;
+                    _grid[x, y] = (int)PointState.Miss;
                 }
             }
 
             return false;
         }
 
-        public bool GameComplete()
+        public bool PlayerLostGame()
         {
             if (ShipCount > 0)
             {
-                for (int x = 0; x < Width; x++)
+                for (int x = 0; x < BoardWidth; x++)
                 {
-                    for (int y = 0; y < Height; y++)
+                    for (int y = 0; y < BoardHeight; y++)
                     {
-                        if (Grid[x, y] == (int)PointState.Ship) return false;
+                        if (_grid[x, y] == (int)PointState.Ship) return false;
                     }
                 }
+                return true;
             }
 
-            return true;
+            return false;
+   
         }
+
         private void UpdateBoardWithShip(int posX, int posY, Direction direction, int length)
         {
 
@@ -95,23 +104,18 @@ namespace Battleship
             {
                 for (int x = posX; x < posX + length; x++)
                 {
-                    Grid[x, posY] = (int)PointState.Ship;
+                    _grid[x, posY] = (int)PointState.Ship;
                 }
             }
             else
             {
                 for (int y = posY; y < posY + length; y++)
                 {
-                    Grid[posX, y] = (int)PointState.Ship;
+                    _grid[posX, y] = (int)PointState.Ship;
                 }
             }
         }
-
-        public void UpdateBoardWithAttack(int posX, int posY)
-        {
-            throw new NotImplementedException();
-        }
-
+           
         private bool CheckShipPositionValid(int posX,int posY, Ship ship, Direction direction)
         {
             if (PositionValid(posX, posY, ship.Length, direction))
@@ -123,12 +127,12 @@ namespace Battleship
 
         private bool PositionValid(int posX, int posY, int length = 1, Direction direction = Direction.Horizontal)
         {
-            var maxX = direction == Direction.Vertical ? Width - 1 :
-                Width - length;
+            var maxX = direction == Direction.Vertical ? BoardWidth - 1 :
+                BoardWidth - length;
             var minX = 0;
 
-            var maxY = direction == Direction.Horizontal ? Height - 1 :
-                Height - length;
+            var maxY = direction == Direction.Horizontal ? BoardHeight - 1 :
+                BoardHeight - length;
 
             var minY = 0;
 
@@ -146,14 +150,14 @@ namespace Battleship
             {
                 for (int x = posX; x < posX + ship.Length; x++)
                 {
-                    if (Grid[x, posY] == (int)PointState.Ship) return true;
+                    if (_grid[x, posY] == (int)PointState.Ship) return true;
                 }
             }
             else
             {
                 for (int y = posY; y < posY + ship.Length; y++)
                 {
-                    if (Grid[posX, y] == (int)PointState.Ship) return true;
+                    if (_grid[posX, y] == (int)PointState.Ship) return true;
                 }
             }
             return false;
