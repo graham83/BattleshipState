@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    public class Player : IBoard
+    public class Player : Person, IBoard
     {
 
         public int BoardWidth
@@ -30,9 +30,9 @@ namespace Battleship
 
         private int[,] _grid { get; set; }
 
-        public Player(int boardWidth, int boardHeight)
+        public Player(int boardWidth, int boardHeight, string name = "") : base(name)
         {
-           _grid = CreateBoard(boardWidth, boardHeight);
+            _grid = CreateBoard(boardWidth, boardHeight);
         }
    
         public int[,] CreateBoard(int width, int height)
@@ -89,6 +89,9 @@ namespace Battleship
                         if (_grid[x, y] == (int)PointState.Ship) return false;
                     }
                 }
+
+                Losses++;
+
                 return true;
             }
 

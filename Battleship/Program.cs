@@ -20,7 +20,12 @@ if (p1.AddShip(1,2, new Ship(3), Direction.Vertical))
 else
     Console.WriteLine("Invalid ship position");
 
-Console.WriteLine("Enter attack coordiantes.");
+Console.WriteLine("Enter Player Name");
+
+p1.Name = Console.ReadLine() ?? "Tester";
+
+Console.WriteLine($"Hi {p1.Name} - keep entering coordinates in format 'x,y'");
+
 var userInput = Console.ReadLine();
 
 while(userInput != "Q")
@@ -46,7 +51,7 @@ while(userInput != "Q")
 
     if (p1.PlayerLostGame())
     {
-        Console.WriteLine("Game Complete. Press Q to exit.");
+        Console.WriteLine($"Game Complete. Your rating is {p1.GetRating()}. Press Q to exit.");
     }
 
     userInput = Console.ReadLine();
