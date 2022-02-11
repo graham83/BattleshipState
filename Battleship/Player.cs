@@ -44,7 +44,6 @@ namespace Battleship
             return _grid;
         }
 
-
         public bool AddShip(int posX, int posY, Ship ship, Direction direction)
         {
             if (CheckShipPositionValid(posX, posY, ship, direction))
@@ -59,7 +58,7 @@ namespace Battleship
 
         public bool TakeAttack(int x, int y)
         {
-            AttackCount++;
+            AttackCount++; // Too bad if they gave wrong or repeat coordinates.
 
             if (PositionValid(x, y))
             {
@@ -81,7 +80,7 @@ namespace Battleship
 
         public bool PlayerLostGame()
         {
-            if (ShipCount > 0)
+            if (ShipCount > 0)  // At least one ship required for game to be lost
             {
                 for (int x = 0; x < BoardWidth; x++)
                 {

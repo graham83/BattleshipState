@@ -85,12 +85,25 @@ namespace Battleship.Tests
         }
 
         [TestMethod()]
+        public void AddShipTestCount()
+        {
+            var p = new Player(10, 10);
+            var ship = new Ship(5);
+            var result = p.AddShip(5, 5, ship, Direction.Vertical);
+            var ship2 = new Ship(2);
+            var result2 = p.AddShip(1, 1, ship, Direction.Vertical);
+
+            Assert.AreEqual(2, p.ShipCount);
+        }
+
+        [TestMethod()]
         public void AddShipTestConflict()
         {
             var p = new Player(10, 10);
             var ship = new Ship(5);
             var result1 = p.AddShip(2, 2, ship, Direction.Vertical);
             var ship2 = new Ship(2);
+            Assert.AreEqual(true, result1);
             var result2 = p.AddShip(2,3,ship2, Direction.Vertical);
             Assert.AreEqual(false, result2);
         }

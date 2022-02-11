@@ -8,10 +8,10 @@ namespace Battleship
 {
     public enum PointState
     {
-        Empty = 0,
-        Miss = 1,
-        Ship = 2,
-        Hit = 3
+        Empty = 0,  // Empty point
+        Miss = 1,   // A point that has no ship and is recorded as a miss
+        Ship = 2,   // A ship point that has not been hit
+        Hit = 3     // A point that is a hit on the ship
     }
 
     public enum Direction
