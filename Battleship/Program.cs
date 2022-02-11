@@ -24,7 +24,7 @@ Console.WriteLine("Enter Player Name");
 
 p1.Name = Console.ReadLine() ?? "Tester";
 
-Console.WriteLine($"Hi {p1.Name} - keep entering coordinates in format 'x,y'");
+Console.WriteLine($"Hi {p1.Name} - keep entering coordinates from your opponent in format 'x,y'");
 
 var userInput = Console.ReadLine();
 
